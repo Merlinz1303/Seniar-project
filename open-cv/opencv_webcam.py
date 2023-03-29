@@ -1,4 +1,4 @@
-import cv2 
+import cv2
 import parinya
 import pyrebase
 import time
@@ -10,7 +10,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT,1080)
 
 yolo = parinya.YOLOv3('coco.names','yolov3-tiny.cfg','yolov3-tiny.weights')
 
-config = { 
+config = {
 	'apiKey': "AIzaSyDeuDvt1c5fEfgdx3WWwaO5aj8c7BjW2ds",
 	'authDomain': "realtime-database-a9abe.firebaseapp.com",
 	'databaseURL': "https://realtime-database-a9abe-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -30,6 +30,7 @@ num = 0
 last_detec = 'none'
 last_image_name = 'none'
 last_detec_time = 0
+img_folder = '/Users/merlinz/Desktop/SeniarProject/Seniar-project-code/open-cv/img/'
 
 while True :
 	_, frame = cap.read()
@@ -39,7 +40,7 @@ while True :
 	for d in model :
 		current_time = str(time.day)+'-'+str(time.month)+'-'+str(time.year)+'_'+str(time.hour)+':'+str(time.minute)+':'+str(int(time.second))
 		label,lrft,top,width,height = d
-		a = d[0] 
+		a = d[0]
 		b = a[0] + a[1] + a[2]
 		if num == 10 :
 			num = 0
@@ -54,8 +55,8 @@ while True :
 			data = {"Type" : detec_type,"Last_Detection_Type" : last_detec,
 						"Last_Detect_Time":last_detec_time,"Image_name" : img_name,"Last_Image_Name":last_image_name}
 			img_path = 'image/'+img_name
-			img_local = '/home/merlinz/Desktop/code/img/'+img_name
-			db.child("Detection").set(data)	
+			img_local = img_folder+img_name
+			db.child("Detection").set(data)
 			storage.child(img_path).put(img_local)
 		if b == "dog" :
 			print(b)
@@ -69,7 +70,7 @@ while True :
 						"Last_Detect_Time":last_detec_time,"Image_name" : img_name,"Last_Image_Name":last_image_name}
 			img_path = 'image/'+img_name
 			img_local = '/home/merlinz/Desktop/code/img/'+img_name
-			db.child("Detection").set(data)	
+			db.child("Detection").set(data)
 			storage.child(img_path).put(img_local)
 		if b == "cat" :
 			print(b)
@@ -83,12 +84,12 @@ while True :
 						"Last_Detect_Time":last_detec_time,"Image_name" : img_name,"Last_Image_Name":last_image_name}
 			img_path = 'image/'+img_name
 			img_local = '/home/merlinz/Desktop/code/img/'+img_name
-			db.child("Detection").set(data)	
+			db.child("Detection").set(data)
 			storage.child(img_path).put(img_local)
 		else :
 			detec_type = "none"
 			data = {"Type" : detec_type,"Last_Detection_Type" : last_detec,
 						"Last_Detect_Time":last_detec_time,"Last_Image_Name":last_image_name}
-			db.child("Detection").set(data)		
+			db.child("Detection").set(data)
 
 	cv2.waitKey(1)
