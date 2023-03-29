@@ -29,8 +29,8 @@ unsigned long sendDataPrevMillis = 0 ;
 int count = 0 ;
 bool signupOK = false ;
 
-const char* ssid     = "Merlinz_2.4G"; 
-const char* password = "1234toei" ;
+const char* ssid     = " "; 
+const char* password = " " ;
 
 int LOOP_COUTER = 0 ;
 int LCD_BRIGHTNESS = 150;
